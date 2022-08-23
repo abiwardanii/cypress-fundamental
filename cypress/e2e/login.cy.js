@@ -37,4 +37,19 @@ describe('Login Page Test Case', () => {
             expect(text).to.contains("login failed");
         });
     });
+
+    it('Do login with wrong values',() => {
+        const email = cy.get("input[name='email']");
+        email.type("wrong@email.com")
+
+        const password = cy.get("input[name='password']");
+        password.type("password");
+
+        const button = cy.get("button");
+        button.click();
+
+        cy.on("window:alert",(text) => {
+            expect(text).to.contains("login failed");
+        });
+    })
  })
