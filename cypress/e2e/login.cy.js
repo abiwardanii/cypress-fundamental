@@ -38,6 +38,7 @@ describe('Login Page Test Case', () => {
         });
     });
 
+    //wrong values
     it('Do login with wrong values',() => {
         const email = cy.get("input[name='email']");
         email.type("wrong@email.com")
@@ -51,5 +52,23 @@ describe('Login Page Test Case', () => {
         cy.on("window:alert",(text) => {
             expect(text).to.contains("login failed");
         });
+    })
+
+    //correct values
+    it('Do login with correct values',() => {
+        const email = cy.get("input[name='email']");
+        email.type("user@react.test")
+
+        const password = cy.get("input[name='password']");
+        password.type("password");
+
+        const button = cy.get("button");
+        button.click();
+
+        cy.on("window:alert",(text) => {
+            expect(text).to.contains("welcome");
+        });
+
+        cy.url().should('eq','http://localhost:3000/dashboard');
     })
  })
