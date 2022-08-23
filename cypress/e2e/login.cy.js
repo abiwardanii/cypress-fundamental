@@ -5,7 +5,7 @@ describe('Login Page Test Case', () => {
         cy.title().should("eq","React Gallery");
         cy.contains("Hello Again");
     });
-    
+
     it('Contains Email and Password Input, and Login Button', () => {
         //check email
         const email = cy.get("input[name='email']");
@@ -25,5 +25,16 @@ describe('Login Page Test Case', () => {
         button.contains("Login");
         button.should("have.css", "background-color","rgb(79, 70, 229)");
         button.should("have.css", "color","rgb(255, 255, 255)");
+
+        
+    });
+    
+    //null values
+    it('Do login with null values', () => {
+        const button = cy.get("button");
+        button.click();
+        cy.on("window:alert",(text) => {
+            expect(text).to.contains("login failed");
+        });
     });
  })
