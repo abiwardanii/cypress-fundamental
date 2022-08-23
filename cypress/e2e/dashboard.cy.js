@@ -44,4 +44,35 @@ describe('Dashboard Page Test Case', () => {
         button.should("have.css","background-color","rgb(79, 70, 229)");
         button.should("have.css","color","rgb(255, 255, 255)");
     });
+    it('Upload some photos', () => {
+        const photos = [
+            {
+                imageValue:'https://images.unsplash.com/photo-1542779283-429940ce8336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cG9rZW1vbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60',
+                descriptionValue: 'pokeball 1',
+                
+            },
+            {
+                imageValue:'https://images.unsplash.com/photo-1613771404721-1f92d799e49f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80',
+                descriptionValue: 'pokeball 2',
+                
+            },
+        ];
+        photos.forEach(({imageValue, descriptionValue}) => {
+            const image = cy.get("input[name='image']");
+            image.type(imageValue)
+
+            const description = cy.get("input[name='desc']");
+            description.type(descriptionValue)
+
+            const button = cy.get('button');
+            button.click();
+
+            //check uploaded images is exist
+            cy.get("img").should('have.attr','src',imageValue);
+            cy.contains(descriptionValue)
+             
+        })
+
+        cy.contains(`Found ${photos.length} photos`)
+    });
  })
